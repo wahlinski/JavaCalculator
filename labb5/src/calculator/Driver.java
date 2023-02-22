@@ -1,6 +1,9 @@
 package calculator;
 public class Driver{
     public static void main(String[] args){
-        GUI gui = new GUI();
+        //
+        //  Inizializes the calculator as a GUI instance on program start.
+        //
+        new GUI();
     }
 }
