@@ -6,7 +6,8 @@ import calculator.Situation;
 import calculator.State;
 
 public class BinOpButton extends CalculatorButton{
-    public BinOpButton(String label, Situation situation){
+    IntBinaryOperator binaryOperator;
+    public BinOpButton(String label, Situation situation, IntBinaryOperator binaryOperator){
         //
         // Call to super constructor.
         // Super constructor sets preferred button size,
@@ -14,6 +15,7 @@ public class BinOpButton extends CalculatorButton{
         // sets font type and size of button label.
         //
         super(label, situation);
+        this.binaryOperator = binaryOperator;
     }
     @Override
     public void transition() {
@@ -109,34 +111,7 @@ public class BinOpButton extends CalculatorButton{
         }
     }
     public IntBinaryOperator getBinaryOperator(){
-        switch(this.getText()){
-            case "+":
-                //
-                // Lambda statement to perform addition calculation
-                //
-                return (x, y) -> {return x + y;};
-            case "-":
-                //
-                // Lambda statement to perform subtraction calculation
-                //
-                return (x, y) -> {return x - y;};
-            case "*":
-                //
-                // Lambda statement to perform multiplication calculation
-                //
-                return (x, y) -> {return x * y;};
-            case "/":
-                //
-                // Lambda statement to perform division calculation
-                //
-                return (x, y) -> {return x / y;};
-            default:
-                //
-                // Should not happen, every button is one of the above.
-                // If more button types are added expand this switch statement.
-                //
-                throw new RuntimeException();
-        }
+        return this.binaryOperator;
     }
     public void resetButton(){
         //
