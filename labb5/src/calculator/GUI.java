@@ -15,6 +15,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.function.IntBinaryOperator;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -22,7 +23,6 @@ public class GUI{
     private JFrame frame;
     private JPanel canvas;
     private JPanel keyPad;
-    //private JLabel display;
     private static Situation situation;
     private static final Insets insets = new Insets(0, 0, 0, 0);
 
@@ -83,8 +83,11 @@ public class GUI{
     private JPanel createKeyPad(){
         //
         // Creates a JPanel with a 4x4 gridLayout,
-        // adds the 16 calculatorButtons to the JPanel in the correct order and
+        // adds the 16 calculatorButton to the JPanel in the correct order and
         // returns the finishied keyPad.
+        //
+        // binOpButtons receive their respective mathematical operations,
+        //  these come in the form of IntBinaryOperator().
         //
         // New button should be added here if calculator is ever expanded.
         //
@@ -92,19 +95,39 @@ public class GUI{
         keyPad.add(new DigitButton("7", situation));
         keyPad.add(new DigitButton("8", situation));
         keyPad.add(new DigitButton("9", situation));
-        keyPad.add(new BinOpButton("/", situation));
+
+        keyPad.add(new BinOpButton("/", situation, 
+        new IntBinaryOperator() { 
+            @Override public int applyAsInt(int x, int y) { return x/y;} 
+        }));
+
         keyPad.add(new DigitButton("4", situation));
         keyPad.add(new DigitButton("5", situation));
         keyPad.add(new DigitButton("6", situation));
-        keyPad.add(new BinOpButton("*", situation));
+
+        keyPad.add(new BinOpButton("*", situation, 
+        new IntBinaryOperator() { 
+            @Override public int applyAsInt(int x, int y) { return x*y;} 
+        }));
+
         keyPad.add(new DigitButton("1", situation));
         keyPad.add(new DigitButton("2", situation));
         keyPad.add(new DigitButton("3", situation));
-        keyPad.add(new BinOpButton("-", situation));
+
+        keyPad.add(new BinOpButton("-", situation, 
+        new IntBinaryOperator() { 
+            @Override public int applyAsInt(int x, int y) { return x-y;} 
+        }));
+
         keyPad.add(new DigitButton("0", situation));
         keyPad.add(new EqualsButton("=", situation));
         keyPad.add(new CancelButton("C", situation));
-        keyPad.add(new BinOpButton("+", situation));
+
+        keyPad.add(new BinOpButton("+", situation, 
+        new IntBinaryOperator() { 
+            @Override public int applyAsInt(int x, int y) { return x+y;} 
+        }));
+
         return keyPad;
     }
 }
